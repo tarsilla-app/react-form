@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "outDir": "./lib",
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "allowJs": true
+  },
+  "exclude": [
+    "lib"
+  ]
+}

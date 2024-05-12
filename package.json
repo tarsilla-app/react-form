@@ -1,0 +1,70 @@
+{
+  "name": "@tarsilla/form",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=20.12.2"
+  },
+  "exports": {
+    ".": {
+      "require": "./lib/index.cjs",
+      "default": "./lib/index.mjs"
+    }
+  },
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib/index.d.ts",
+    "lib/index.cjs",
+    "lib/index.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && rollup -c --bundleConfigAsCjs",
+    "prepub": "npm run build",
+    "pub": "npm publish --access public",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^1.3.5",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@storybook/addon-essentials": "^8.0.10",
+    "@storybook/addon-interactions": "^8.0.10",
+    "@storybook/addon-links": "^8.0.10",
+    "@storybook/addon-onboarding": "^8.0.10",
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.2",
+    "@storybook/blocks": "^8.0.10",
+    "@storybook/react": "^8.0.10",
+    "@storybook/react-webpack5": "^8.0.10",
+    "@storybook/test": "^8.0.10",
+    "@tarsilla/eslint-config": "^0.0.31",
+    "@types/react": "^18.3.2",
+    "eslint": "^8.57.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "rollup": "^4.17.2",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "storybook": "^8.0.10",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0"
+  },
+  "dependencies": {
+    "@tarsilla/react-components": "^0.0.3",
+    "react-hook-form": "^7.51.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  }
+}

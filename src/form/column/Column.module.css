@@ -1,0 +1,5 @@
+.column {
+  display: flex;
+  flex-flow: column;
+  row-gap: 4px;
+}
