@@ -8,20 +8,20 @@ import {
 
 function validateFields<T>({
   fields,
-  allowedFieldTypes,
+  allowedComponents,
 }: {
   fields?: ContractField<T>[];
-  allowedFieldTypes: string[];
+  allowedComponents: string[];
 }): string[] {
   return (
     fields?.reduce<string[]>((ids, field) => {
       //TODO ID não pode ter caracter especial nem espaço
       if (!field.id) {
         throw new Error('Field id is required');
-      } else if (!field.type) {
-        throw new Error('Field type is required');
-      } else if (!allowedFieldTypes.includes(field.type)) {
-        throw new Error(`Field with type ${field.type} is not allowed`);
+      } else if (!field.component) {
+        throw new Error('Field component is required');
+      } else if (!allowedComponents.includes(field.component)) {
+        throw new Error(`Component '${field.component}' is not allowed`);
       }
       return [...ids, field.id as string];
     }, []) ?? []
@@ -30,10 +30,10 @@ function validateFields<T>({
 
 function validateRows<T>({
   rows,
-  allowedFieldTypes,
+  allowedComponents,
 }: {
   rows?: ContractRow<T>[];
-  allowedFieldTypes: string[];
+  allowedComponents: string[];
 }): string[] {
   return (
     rows?.reduce<string[]>((ids, row) => {
@@ -46,15 +46,15 @@ function validateRows<T>({
       }
       const fieldsIds = validateFields({
         fields: row.fields,
-        allowedFieldTypes,
+        allowedComponents,
       });
       const rowsIds = validateRows({
         rows: row.rows,
-        allowedFieldTypes,
+        allowedComponents,
       });
       const columnsIds = validateColumns({
         columns: row.columns,
-        allowedFieldTypes,
+        allowedComponents,
       });
 
       return [...ids, row.id, ...fieldsIds, ...rowsIds, ...columnsIds];
@@ -64,10 +64,10 @@ function validateRows<T>({
 
 function validateColumns<T>({
   columns,
-  allowedFieldTypes,
+  allowedComponents,
 }: {
   columns?: ContractColumn<T>[];
-  allowedFieldTypes: string[];
+  allowedComponents: string[];
 }): string[] {
   return (
     columns?.reduce<string[]>((ids, column) => {
@@ -80,15 +80,15 @@ function validateColumns<T>({
       }
       const fieldsIds = validateFields({
         fields: column.fields,
-        allowedFieldTypes,
+        allowedComponents,
       });
       const rowsIds = validateRows({
         rows: column.rows,
-        allowedFieldTypes,
+        allowedComponents,
       });
       const columnsIds = validateColumns({
         columns: column.columns,
-        allowedFieldTypes,
+        allowedComponents,
       });
 
       return [...ids, column.id, ...fieldsIds, ...rowsIds, ...columnsIds];
@@ -98,10 +98,10 @@ function validateColumns<T>({
 
 function validateTabs<T>({
   tabs,
-  allowedFieldTypes,
+  allowedComponents,
 }: {
   tabs?: ContractTab<T>[];
-  allowedFieldTypes: string[];
+  allowedComponents: string[];
 }): string[] {
   return (
     tabs?.reduce<string[]>((ids, tab) => {
@@ -114,15 +114,15 @@ function validateTabs<T>({
       }
       const fieldsIds = validateFields({
         fields: tab.fields,
-        allowedFieldTypes,
+        allowedComponents,
       });
       const rowsIds = validateRows({
         rows: tab.rows,
-        allowedFieldTypes,
+        allowedComponents,
       });
       const columnsIds = validateColumns({
         columns: tab.columns,
-        allowedFieldTypes,
+        allowedComponents,
       });
 
       return [...ids, tab.id, ...fieldsIds, ...rowsIds, ...columnsIds];
@@ -132,28 +132,28 @@ function validateTabs<T>({
 
 function validateContract<T>({
   contract,
-  allowedFieldTypes,
+  allowedComponents,
 }: {
   contract: Contract<T>;
-  allowedFieldTypes: string[];
+  allowedComponents: string[];
 }): void {
   const v = [contract.rows, contract.columns, contract.tabs].filter(Boolean);
   if (v.length > 1) {
     throw new Error('Contract can only have rows or columns or tabs');
   }
-  const rowsIds = validateRows({ rows: contract.rows, allowedFieldTypes });
+  const rowsIds = validateRows({ rows: contract.rows, allowedComponents });
   const columnsIds = validateColumns({
     columns: contract.columns,
-    allowedFieldTypes,
+    allowedComponents,
   });
-  const tabsIds = validateTabs({ tabs: contract.tabs, allowedFieldTypes });
+  const tabsIds = validateTabs({ tabs: contract.tabs, allowedComponents });
 
   const ids = [...rowsIds, ...columnsIds, ...tabsIds];
 
   ids.forEach((id) => {
     const equals = ids.filter((eq) => eq === id);
     if (!equals || equals.length > 1) {
-      throw new Error(`${id} is duplicated`);
+      throw new Error(`id '${id}' is duplicated`);
     }
   });
 }

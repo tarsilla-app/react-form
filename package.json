@@ -59,7 +59,7 @@
     "typescript-eslint": "^7.8.0"
   },
   "dependencies": {
-    "@tarsilla/react-components": "^0.0.3",
+    "@tarsilla/react-components": "^0.0.12",
     "react-hook-form": "^7.51.4"
   },
   "eslintConfig": {

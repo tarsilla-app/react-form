@@ -4,35 +4,47 @@ import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Form, useForm } from '../src';
-import { SelectField, TextAreaField, TextField } from '../src/allowed-fields';
-import { validateContract } from '../src/hooks/validator';
 import { Contract } from '../src/types';
+
+function CatchForm({ contract }: { contract: Contract<never> }): JSX.Element {
+  try {
+    const form = useForm({ contract });
+
+    return <Form form={form} />;
+  } catch (error: unknown) {
+    return <>{(error as Error).message}</>;
+  }
+}
 
 function FormStory(): JSX.Element {
   const initialContract = {
+    style: {},
     tabs: [
       {
         id: 'tab1',
         title: 'Tab 1',
+        style: {},
         rows: [
           {
             id: 'row1',
+            style: {},
             fields: [
               {
                 id: 'row1field1',
-                type: 'text',
+                component: 'text',
                 title: 'Row 1 Field 1',
-              },
-              {
-                id: 'row1field2',
-                type: 'text',
-                props: {
-                  placeholder: 'Row 1 Field 2',
+                style: {
+                  color: 'green',
                 },
               },
               {
+                id: 'row1field2',
+                component: 'text',
+                placeholder: 'Row 1 Field 2',
+              },
+              {
                 id: 'row1field3',
-                type: 'text',
+                component: 'text',
               },
             ],
           },
@@ -41,7 +53,7 @@ function FormStory(): JSX.Element {
             fields: [
               {
                 id: 'row2field1',
-                type: 'textarea',
+                component: 'textarea',
               },
             ],
           },
@@ -50,27 +62,26 @@ function FormStory(): JSX.Element {
             fields: [
               {
                 id: 'row3field1',
-                type: 'select',
+                component: 'select',
                 title: 'Row 3 Field 1',
-                props: {
-                  options: [
-                    {
-                      label: 'option 1',
-                      value: 'value 1',
-                    },
-                  ],
+                options: [
+                  {
+                    label: 'option 1',
+                    value: 'value 1',
+                  },
+                ],
+                style: {
+                  color: 'green',
                 },
               },
               {
                 id: 'row3field2',
-                type: 'select',
-                props: {
-                  placeholder: 'Row 3 Field 2',
-                },
+                component: 'select',
+                placeholder: 'Row 3 Field 2',
               },
               {
                 id: 'row3field3',
-                type: 'select',
+                component: 'select',
               },
             ],
           },
@@ -79,25 +90,25 @@ function FormStory(): JSX.Element {
       {
         id: 'tab2',
         title: 'Tab 2',
+        style: {},
         columns: [
           {
             id: 'column1',
+            style: {},
             fields: [
               {
                 id: 'column1field1',
-                type: 'text',
+                component: 'text',
                 title: 'Column 1 Field 1',
               },
               {
                 id: 'column1field2',
-                type: 'text',
-                props: {
-                  placeholder: 'Column 1 Field 2',
-                },
+                component: 'text',
+                placeholder: 'Column 1 Field 2',
               },
               {
                 id: 'column1field3',
-                type: 'text',
+                component: 'text',
               },
             ],
           },
@@ -106,7 +117,7 @@ function FormStory(): JSX.Element {
             fields: [
               {
                 id: 'column2field1',
-                type: 'textarea',
+                component: 'textarea',
               },
             ],
           },
@@ -115,27 +126,23 @@ function FormStory(): JSX.Element {
             fields: [
               {
                 id: 'column3field1',
-                type: 'select',
+                component: 'select',
                 title: 'Column 3 Field 1',
-                props: {
-                  options: [
-                    {
-                      label: 'option 1',
-                      value: 'value 1',
-                    },
-                  ],
-                },
+                options: [
+                  {
+                    label: 'option 1',
+                    value: 'value 1',
+                  },
+                ],
               },
               {
                 id: 'column3field2',
-                type: 'select',
-                props: {
-                  placeholder: 'Column 3 Field 2',
-                },
+                component: 'select',
+                placeholder: 'Column 3 Field 2',
               },
               {
                 id: 'column3field3',
-                type: 'select',
+                component: 'select',
               },
             ],
           },
@@ -147,28 +154,17 @@ function FormStory(): JSX.Element {
     JSON.stringify(initialContract, null, 2),
   );
   const [error, setError] = useState<string>();
-
   const [contract, setContract] = useState<Contract<never>>(initialContract);
-  const form = useForm({ contract });
 
   useEffect(() => {
     try {
       const parsed = JSON.parse(value) as Contract<unknown>;
-      const fields = [SelectField, TextAreaField, TextField];
-
-      //TODO ver uma forma de nao precisar disso! talvez try catch no <Form />
-      validateContract({
-        contract: parsed,
-        allowedFieldTypes: fields.map((field) => field.id),
-      });
-
       setContract(parsed);
       setError(undefined);
     } catch (e: unknown) {
       setError((e as Error).message);
     }
   }, [value]);
-
   return (
     <div
       style={{
@@ -204,7 +200,7 @@ function FormStory(): JSX.Element {
           padding: '8px',
         }}
       >
-        {error ? <>{error}</> : <Form form={form} />}
+        {error ? <>{error}</> : <CatchForm contract={contract} />}
       </div>
     </div>
   );

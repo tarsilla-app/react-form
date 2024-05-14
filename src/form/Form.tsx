@@ -12,7 +12,7 @@ function Form<T extends FieldValues>({
 }: {
   form: FormProps<T>;
 }): JSX.Element {
-  const { contract, fields, ...methods } = form;
+  const { contract, components, ...methods } = form;
 
   return (
     <FormProvider {...methods}>
@@ -20,20 +20,41 @@ function Form<T extends FieldValues>({
         className={styles.form}
         style={{
           '--flex-flow': contract.rows ? 'column' : 'row',
+          width: '100%',
+          height: '100%',
+          ...contract.style,
         }}
       >
         {contract.rows?.map((row) => (
-          <Row contract={row} fields={fields} key={row.id} />
+          <Row
+            contract={row}
+            components={components}
+            style={row.style}
+            key={row.id}
+          />
         ))}
         {contract.columns?.map((column) => (
-          <Column contract={column} fields={fields} key={column.id} />
+          <Column
+            contract={column}
+            components={components}
+            style={column.style}
+            key={column.id}
+          />
         ))}
         {contract.tabs && (
           <TabWrapper
             tabs={contract.tabs.map((tab) => ({
               header: <>{tab.title}</>,
-              content: <Tab contract={tab} fields={fields} key={tab.id} />,
+              content: (
+                <Tab
+                  contract={tab}
+                  components={components}
+                  style={tab.style}
+                  key={tab.id}
+                />
+              ),
             }))}
+            style={contract.style}
           />
         )}
       </div>
