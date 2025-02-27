@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Form, useForm } from '../src/index.js';
-import { Contract } from '../src/types.js';
+import { Contract } from '../src/types/index.js';
 
 function CatchForm({ contract }: { contract: Contract<any> }): JSX.Element {
   const onSubmit = (data: any) => console.log(data);

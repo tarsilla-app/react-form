@@ -1,9 +1,9 @@
 import { HTMLAttributes } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
+import { FormComponent, FormComponentProps } from '@tarsilla/react-form-components';
 
 import { Form, useForm } from '../src/index.js';
-import { FormComponent, FormComponentProps } from '../src/types.js';
 
 const CustomInput: FormComponent<string, HTMLAttributes<HTMLInputElement>> = {
   id: 'custom-input',
@@ -12,7 +12,7 @@ const CustomInput: FormComponent<string, HTMLAttributes<HTMLInputElement>> = {
 
 const TextFieldOverride = {
   id: 'text',
-  render: ({ onChange, ...rest }: FormComponentProps<string> & HTMLAttributes<HTMLInputElement>): JSX.Element => {
+  render: ({ onChange, ...rest }: FormComponentProps<string, HTMLAttributes<HTMLInputElement>>): JSX.Element => {
     return <input onChange={(e) => onChange(e.target.value)} {...rest} />;
   },
 };
