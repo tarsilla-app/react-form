@@ -1,8 +1,15 @@
+import styled from '@emotion/styled';
+import { FormComponent } from '@tarsilla/react-form-components';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 
-import { ContractField, FormComponent, UnknownObject } from '@types';
+import { ContractField, UnknownObject } from '@types';
 
-import styles from './Field.module.css';
+const Container = styled.div`
+  gap: 4px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+`;
 
 type Props<FormValue extends FieldValues> = {
   contract: ContractField<FormValue>;
@@ -21,7 +28,7 @@ function Field<FormValue extends FieldValues>({ contract, components }: Props<Fo
   }
 
   return (
-    <div className={styles.field}>
+    <Container>
       {title && <>{title}:</>}
       <Controller
         name={id}
@@ -30,7 +37,7 @@ function Field<FormValue extends FieldValues>({ contract, components }: Props<Fo
           <Component.render id={id} value={value} onChange={onChange} {...rest} />
         )}
       />
-    </div>
+    </Container>
   );
 }
 

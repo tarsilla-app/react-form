@@ -133,7 +133,7 @@ function validateContract<FormValue extends FieldValues>({
   contract: Contract<FormValue>;
   allowedComponents: string[];
 }): void {
-  const v = [contract.rows, contract.columns, contract.tabs].filter(Boolean);
+  const v = [contract.rows, contract.columns, contract.tab].filter(Boolean);
   if (v.length > 1) {
     throw new Error('Contract can only have rows or columns or tabs');
   }
@@ -142,7 +142,7 @@ function validateContract<FormValue extends FieldValues>({
     columns: contract.columns,
     allowedComponents,
   });
-  const tabsIds = validateTabs({ tabs: contract.tabs, allowedComponents });
+  const tabsIds = validateTabs({ tabs: contract.tab?.tabs, allowedComponents });
 
   const ids = [...rowsIds, ...columnsIds, ...tabsIds];
 

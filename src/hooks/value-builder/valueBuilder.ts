@@ -73,7 +73,7 @@ function buildTabsValues<FormValue extends FieldValues>({
 
 function buildValues<FormValue extends FieldValues>({ contract, values }: UseFormProps<FormValue>): FormValue {
   const allValues = [
-    ...buildTabsValues({ tabs: contract.tabs, values }),
+    ...buildTabsValues({ tabs: contract.tab?.tabs, values }),
     ...buildRowsValues({ rows: contract.rows, values }),
     ...buildColumnsValues({ columns: contract.columns, values }),
   ];

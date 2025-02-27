@@ -9,10 +9,15 @@ import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import { UnknownObject } from './UnknownObject.js';
 
 type Contract<FormValue extends FieldValues> = {
-  tabs?: ContractTab<FormValue>[];
+  tab?: ContractTabs<FormValue>;
   rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
   style?: CSSProperties | TabProps['style'];
+};
+
+type ContractTabs<FormValue extends FieldValues> = {
+  tabs: ContractTab<FormValue>[];
+  style?: TabProps['style'];
 };
 
 type ContractRow<FormValue extends FieldValues> = {
@@ -67,6 +72,7 @@ export {
   type Contract,
   type ContractRow,
   type ContractColumn,
+  type ContractTabs,
   type ContractTab,
   type ContractField,
   type UseFormProps,

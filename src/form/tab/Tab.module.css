@@ -1,6 +1,0 @@
-.tab {
-    display: flex;
-    flex-flow: var(--flex-flow);
-    row-gap: 4px;
-    column-gap: 4px;
-  }
