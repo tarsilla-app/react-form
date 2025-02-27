@@ -1,6 +1,6 @@
 import { FieldValues } from 'react-hook-form';
 
-import { ContractColumn, ContractField, ContractRow, ContractTab, UseFormProps } from '@types';
+import { ContractColumn, ContractField, ContractRow, ContractTabs, UseFormProps } from '@types';
 
 function buildFieldsValues<FormValue extends FieldValues>({
   fields,
@@ -57,7 +57,7 @@ function buildTabsValues<FormValue extends FieldValues>({
   tabs,
   values,
 }: {
-  tabs?: ContractTab<FormValue>[];
+  tabs?: ContractTabs<FormValue>[];
   values?: FormValue;
 }): { id: keyof FormValue; value?: unknown }[] {
   return (

@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { FormComponent } from '@tarsilla/react-form-components';
 import { FieldValues } from 'react-hook-form';
 
-import { ContractTab, UnknownObject } from '@types';
+import { ContractTabs, UnknownObject } from '@types';
 
 import { Column } from '../column/index.js';
 import { Field } from '../field/index.js';
@@ -24,7 +24,7 @@ const Container = styled.div<ContainerProps>`
 `;
 
 type Props<FormValue extends FieldValues> = {
-  contract: ContractTab<FormValue>;
+  contract: ContractTabs<FormValue>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   components: FormComponent<any, UnknownObject>[];
   style?: CSSProperties;

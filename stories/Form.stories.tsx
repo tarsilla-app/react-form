@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useEffect, useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Form, useForm } from '../src/index.js';
-import { Contract } from '../src/types/index.js';
+import { Contract, UnknownObject } from '../src/types/index.js';
 
-function CatchForm({ contract }: { contract: Contract<any> }): JSX.Element {
-  const onSubmit = (data: any) => console.log(data);
+function CatchForm({ contract }: { contract: Contract<UnknownObject> }): JSX.Element {
+  const onSubmit = (data: UnknownObject) => console.log(data);
   try {
     const form = useForm({ contract });
 
@@ -168,11 +166,11 @@ function FormStory(): JSX.Element {
   };
   const [value, setValue] = useState<string>(JSON.stringify(initialContract, null, 2));
   const [error, setError] = useState<string>();
-  const [contract, setContract] = useState<Contract<any>>(initialContract);
+  const [contract, setContract] = useState<Contract<UnknownObject>>(initialContract);
 
   useEffect(() => {
     try {
-      const parsed = JSON.parse(value) as Contract<any>;
+      const parsed = JSON.parse(value) as Contract<UnknownObject>;
       setContract(parsed);
       setError(undefined);
     } catch (e: unknown) {

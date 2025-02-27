@@ -1,6 +1,6 @@
 import { FieldValues } from 'react-hook-form';
 
-import { Contract, ContractColumn, ContractField, ContractRow, ContractTab } from '@types';
+import { Contract, ContractColumn, ContractField, ContractRow, ContractTabs } from '@types';
 
 function validateFields<FormValue extends FieldValues>({
   fields,
@@ -96,7 +96,7 @@ function validateTabs<FormValue extends FieldValues>({
   tabs,
   allowedComponents,
 }: {
-  tabs?: ContractTab<FormValue>[];
+  tabs?: ContractTabs<FormValue>[];
   allowedComponents: string[];
 }): string[] {
   return (
