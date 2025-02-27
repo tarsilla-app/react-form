@@ -2,23 +2,21 @@ import { CSSProperties } from 'react';
 
 import { FieldValues } from 'react-hook-form';
 
-import styles from './Tab.module.css';
-import { ContractTab, FormComponent } from '../../types';
-import { Column } from '../column';
-import { Field } from '../field';
-import { Row } from '../row';
+import { ContractTab, FormComponent, UnknownObject } from '@types';
 
-type Props<T> = {
-  contract: ContractTab<T>;
-  components: FormComponent<unknown, object>[];
+import styles from './Tab.module.css';
+import { Column } from '../column/index.js';
+import { Field } from '../field/index.js';
+import { Row } from '../row/index.js';
+
+type Props<FormValue extends FieldValues> = {
+  contract: ContractTab<FormValue>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  components: FormComponent<any, UnknownObject>[];
   style?: CSSProperties;
 };
 
-function Tab<T extends FieldValues>({
-  contract,
-  components,
-  style,
-}: Props<T>): JSX.Element {
+function Tab<FormValue extends FieldValues>({ contract, components, style }: Props<FormValue>): JSX.Element {
   return (
     <div
       className={styles.tab}
@@ -29,28 +27,10 @@ function Tab<T extends FieldValues>({
         ...style,
       }}
     >
-      {contract.fields?.map((field) => (
-        <Field
-          contract={field}
-          components={components}
-          key={field.id as string}
-        />
-      ))}
-      {contract.rows?.map((row) => (
-        <Row
-          contract={row}
-          components={components}
-          style={row.style}
-          key={row.id}
-        />
-      ))}
+      {contract.fields?.map((field) => <Field contract={field} components={components} key={field.id as string} />)}
+      {contract.rows?.map((row) => <Row contract={row} components={components} style={row.style} key={row.id} />)}
       {contract.columns?.map((column) => (
-        <Column
-          contract={column}
-          components={components}
-          style={column.style}
-          key={column.id}
-        />
+        <Column contract={column} components={components} style={column.style} key={column.id} />
       ))}
     </div>
   );

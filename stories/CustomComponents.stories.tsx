@@ -1,36 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { useEffect, useState } from 'react';
+import { HTMLAttributes } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Form, useForm } from '../src/index.js';
-import { Contract } from '../src/types.js';
+import { FormComponent, FormComponentProps } from '../src/types.js';
 
-function CatchForm({ contract }: { contract: Contract<any> }): JSX.Element {
-  const onSubmit = (data: any) => console.log(data);
-  try {
-    const form = useForm({ contract });
+const CustomInput: FormComponent<string, HTMLAttributes<HTMLInputElement>> = {
+  id: 'custom-input',
+  render: ({ onChange, ...rest }) => <input onChange={(e) => onChange(e.target.value)} {...rest} />,
+};
 
-    return (
-      <>
-        <Form form={form} />
-        <button
-          onClick={() => {
-            void form.handleSubmit(onSubmit)();
-          }}
-        >
-          submit
-        </button>
-      </>
-    );
-  } catch (error: unknown) {
-    return <>{(error as Error).message}</>;
-  }
-}
+const TextFieldOverride = {
+  id: 'text',
+  render: ({ onChange, ...rest }: FormComponentProps<string> & HTMLAttributes<HTMLInputElement>): JSX.Element => {
+    return <input onChange={(e) => onChange(e.target.value)} {...rest} />;
+  },
+};
 
 function FormStory(): JSX.Element {
-  const initialContract = {
+  const contract = {
     style: {},
     tabs: [
       {
@@ -44,7 +32,7 @@ function FormStory(): JSX.Element {
             fields: [
               {
                 id: 'row1field1',
-                component: 'text',
+                component: 'custom-input',
                 title: 'Row 1 Field 1',
                 style: {
                   color: 'green',
@@ -163,58 +151,15 @@ function FormStory(): JSX.Element {
       },
     ],
   };
-  const [value, setValue] = useState<string>(JSON.stringify(initialContract, null, 2));
-  const [error, setError] = useState<string>();
-  const [contract, setContract] = useState<Contract<any>>(initialContract);
+  const customComponents = [CustomInput, TextFieldOverride];
 
-  useEffect(() => {
-    try {
-      const parsed = JSON.parse(value) as Contract<any>;
-      setContract(parsed);
-      setError(undefined);
-    } catch (e: unknown) {
-      setError((e as Error).message);
-    }
-  }, [value]);
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexFlow: 'row',
-        rowGap: '4px',
-        columnGap: '4px',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          flexFlow: 'column',
-          rowGap: '4px',
-          width: '25vw',
-        }}
-      >
-        <textarea value={value} onChange={(event) => setValue(event.target.value)} rows={30} />
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexFlow: 'column',
-          rowGap: '4px',
-          borderWidth: '1px',
-          borderColor: 'black',
-          borderStyle: 'solid',
-          width: '60vw',
-          padding: '8px',
-        }}
-      >
-        {error ? <>{error}</> : <CatchForm contract={contract} />}
-      </div>
-    </div>
-  );
+  const form = useForm({ contract, customComponents });
+
+  return <Form form={form} />;
 }
 
 const meta: Meta<typeof FormStory> = {
-  title: 'Form Builder',
+  title: 'Custom Components',
   component: FormStory,
   parameters: {
     layout: 'centered',
@@ -227,4 +172,4 @@ const meta: Meta<typeof FormStory> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const FormBuilder: Story = {};
+export const CustomComponents: Story = {};

@@ -2,22 +2,20 @@ import { CSSProperties } from 'react';
 
 import { FieldValues } from 'react-hook-form';
 
-import styles from './Row.module.css';
-import { ContractRow, FormComponent } from '../../types';
-import { Column } from '../column';
-import { Field } from '../field';
+import { ContractRow, FormComponent, UnknownObject } from '@types';
 
-type Props<T> = {
-  contract: ContractRow<T>;
-  components: FormComponent<unknown, object>[];
+import styles from './Row.module.css';
+import { Column } from '../column/index.js';
+import { Field } from '../field/index.js';
+
+type Props<FormValue extends FieldValues> = {
+  contract: ContractRow<FormValue>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  components: FormComponent<any, UnknownObject>[];
   style?: CSSProperties;
 };
 
-function Row<T extends FieldValues>({
-  contract,
-  components,
-  style,
-}: Props<T>): JSX.Element {
+function Row<FormValue extends FieldValues>({ contract, components, style }: Props<FormValue>): JSX.Element {
   return (
     <div
       className={styles.row}
@@ -27,28 +25,10 @@ function Row<T extends FieldValues>({
         ...style,
       }}
     >
-      {contract.fields?.map((field) => (
-        <Field
-          contract={field}
-          components={components}
-          key={field.id as string}
-        />
-      ))}
-      {contract.rows?.map((row) => (
-        <Row
-          contract={row}
-          components={components}
-          style={row.style}
-          key={row.id}
-        />
-      ))}
+      {contract.fields?.map((field) => <Field contract={field} components={components} key={field.id as string} />)}
+      {contract.rows?.map((row) => <Row contract={row} components={components} style={row.style} key={row.id} />)}
       {contract.columns?.map((column) => (
-        <Column
-          contract={column}
-          components={components}
-          style={column.style}
-          key={column.id}
-        />
+        <Column contract={column} components={components} style={column.style} key={column.id} />
       ))}
     </div>
   );

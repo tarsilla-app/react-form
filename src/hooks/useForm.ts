@@ -1,21 +1,17 @@
+import { Select, Text, TextArea } from '@tarsilla/react-form-components';
 import { FieldValues, useForm as useHookForm } from 'react-hook-form';
 
-import { validateContract } from './validator';
-import { buildValues } from './value-builder';
-import { SelectField, TextAreaField, TextField } from '../components';
-import { FormComponent, FormProps, UseFormProps } from '../types';
+import { FormProps, UseFormProps } from '@types';
 
-function useForm<T extends FieldValues>({
+import { validateContract } from './validator/index.js';
+import { buildValues } from './value-builder/index.js';
+
+function useForm<FormValue extends FieldValues>({
   contract,
   values,
   customComponents = [],
-}: UseFormProps<T>): FormProps<T> {
-  const components = [
-    ...customComponents,
-    SelectField,
-    TextAreaField,
-    TextField,
-  ] as FormComponent<unknown, object>[];
+}: UseFormProps<FormValue>): FormProps<FormValue> {
+  const components = [...customComponents, Select, TextArea, Text];
 
   validateContract({
     contract,
@@ -23,7 +19,7 @@ function useForm<T extends FieldValues>({
   });
 
   const formValues = buildValues({ contract, values });
-  const methods = useHookForm<T>({ values: formValues });
+  const methods = useHookForm<FormValue>({ values: formValues });
   return {
     ...methods,
     contract,

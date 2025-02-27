@@ -1,16 +1,12 @@
-import {
-  Contract,
-  ContractColumn,
-  ContractField,
-  ContractRow,
-  ContractTab,
-} from '../../types';
+import { FieldValues } from 'react-hook-form';
 
-function validateFields<T>({
+import { Contract, ContractColumn, ContractField, ContractRow, ContractTab } from '@types';
+
+function validateFields<FormValue extends FieldValues>({
   fields,
   allowedComponents,
 }: {
-  fields?: ContractField<T>[];
+  fields?: ContractField<FormValue>[];
   allowedComponents: string[];
 }): string[] {
   return (
@@ -28,11 +24,11 @@ function validateFields<T>({
   );
 }
 
-function validateRows<T>({
+function validateRows<FormValue extends FieldValues>({
   rows,
   allowedComponents,
 }: {
-  rows?: ContractRow<T>[];
+  rows?: ContractRow<FormValue>[];
   allowedComponents: string[];
 }): string[] {
   return (
@@ -62,11 +58,11 @@ function validateRows<T>({
   );
 }
 
-function validateColumns<T>({
+function validateColumns<FormValue extends FieldValues>({
   columns,
   allowedComponents,
 }: {
-  columns?: ContractColumn<T>[];
+  columns?: ContractColumn<FormValue>[];
   allowedComponents: string[];
 }): string[] {
   return (
@@ -96,11 +92,11 @@ function validateColumns<T>({
   );
 }
 
-function validateTabs<T>({
+function validateTabs<FormValue extends FieldValues>({
   tabs,
   allowedComponents,
 }: {
-  tabs?: ContractTab<T>[];
+  tabs?: ContractTab<FormValue>[];
   allowedComponents: string[];
 }): string[] {
   return (
@@ -130,11 +126,11 @@ function validateTabs<T>({
   );
 }
 
-function validateContract<T>({
+function validateContract<FormValue extends FieldValues>({
   contract,
   allowedComponents,
 }: {
-  contract: Contract<T>;
+  contract: Contract<FormValue>;
   allowedComponents: string[];
 }): void {
   const v = [contract.rows, contract.columns, contract.tabs].filter(Boolean);

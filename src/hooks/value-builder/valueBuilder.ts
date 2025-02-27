@@ -1,18 +1,14 @@
-import {
-  ContractColumn,
-  ContractField,
-  ContractRow,
-  ContractTab,
-  UseFormProps,
-} from '../../types';
+import { FieldValues } from 'react-hook-form';
 
-function buildFieldsValues<T>({
+import { ContractColumn, ContractField, ContractRow, ContractTab, UseFormProps } from '@types';
+
+function buildFieldsValues<FormValue extends FieldValues>({
   fields,
   values,
 }: {
-  fields?: ContractField<T>[];
-  values?: T;
-}): { id: keyof T; value?: unknown }[] {
+  fields?: ContractField<FormValue>[];
+  values?: FormValue;
+}): { id: keyof FormValue; value?: unknown }[] {
   return (
     fields?.flatMap((field) => ({
       id: field.id,
@@ -21,13 +17,13 @@ function buildFieldsValues<T>({
   );
 }
 
-function buildColumnsValues<T>({
+function buildColumnsValues<FormValue extends FieldValues>({
   columns,
   values,
 }: {
-  columns?: ContractColumn<T>[];
-  values?: T;
-}): { id: keyof T; value?: unknown }[] {
+  columns?: ContractColumn<FormValue>[];
+  values?: FormValue;
+}): { id: keyof FormValue; value?: unknown }[] {
   return (
     columns?.flatMap((column) => {
       return [
@@ -39,13 +35,13 @@ function buildColumnsValues<T>({
   );
 }
 
-function buildRowsValues<T>({
+function buildRowsValues<FormValue extends FieldValues>({
   rows,
   values,
 }: {
-  rows?: ContractRow<T>[];
-  values?: T;
-}): { id: keyof T; value?: unknown }[] {
+  rows?: ContractRow<FormValue>[];
+  values?: FormValue;
+}): { id: keyof FormValue; value?: unknown }[] {
   return (
     rows?.flatMap((row) => {
       return [
@@ -57,13 +53,13 @@ function buildRowsValues<T>({
   );
 }
 
-function buildTabsValues<T>({
+function buildTabsValues<FormValue extends FieldValues>({
   tabs,
   values,
 }: {
-  tabs?: ContractTab<T>[];
-  values?: T;
-}): { id: keyof T; value?: unknown }[] {
+  tabs?: ContractTab<FormValue>[];
+  values?: FormValue;
+}): { id: keyof FormValue; value?: unknown }[] {
   return (
     tabs?.flatMap((tab) => {
       return [
@@ -75,16 +71,16 @@ function buildTabsValues<T>({
   );
 }
 
-function buildValues<T>({ contract, values }: UseFormProps<T>): T {
+function buildValues<FormValue extends FieldValues>({ contract, values }: UseFormProps<FormValue>): FormValue {
   const allValues = [
     ...buildTabsValues({ tabs: contract.tabs, values }),
     ...buildRowsValues({ rows: contract.rows, values }),
     ...buildColumnsValues({ columns: contract.columns, values }),
   ];
   return allValues.reduce((returnValue, value) => {
-    returnValue[value.id] = value.value as T[typeof value.id];
+    returnValue[value.id] = value.value as FormValue[typeof value.id];
     return returnValue;
-  }, {} as T);
+  }, {} as FormValue);
 }
 
 export { buildValues };
