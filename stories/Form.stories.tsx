@@ -22,14 +22,162 @@ type Value = {
   column3field3: string;
 };
 
+const initialContract: Contract<Value> = {
+  debounceWait: 2000,
+  style: {},
+  tab: {
+    tabs: [
+      {
+        title: 'Tab 1',
+        style: {},
+        rows: [
+          {
+            style: {},
+            fields: [
+              {
+                id: 'row1field1',
+                component: 'input',
+                title: 'Row 1 Field 1',
+                style: {
+                  color: 'green',
+                },
+              },
+              {
+                id: 'row1field2',
+                component: 'input',
+                placeholder: 'Row 1 Field 2',
+              },
+              {
+                id: 'row1field3',
+                component: 'input',
+              },
+            ],
+          },
+          {
+            fields: [
+              {
+                id: 'row2field1',
+                component: 'textarea',
+              },
+            ],
+          },
+          {
+            fields: [
+              {
+                id: 'row3field1',
+                component: 'select',
+                title: 'Row 3 Field 1',
+                options: [
+                  {
+                    label: 'option 1',
+                    value: 'value 1',
+                  },
+                ],
+                style: {
+                  color: 'green',
+                },
+              },
+              {
+                id: 'row3field2',
+                component: 'select',
+                placeholder: 'Row 3 Field 2',
+              },
+              {
+                id: 'row3field3',
+                component: 'select',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Tab 2',
+        style: {},
+        columns: [
+          {
+            style: {},
+            fields: [
+              {
+                id: 'column1field1',
+                component: 'input',
+                title: 'Column 1 Field 1',
+              },
+              {
+                id: 'column1field2',
+                component: 'input',
+                placeholder: 'Column 1 Field 2',
+              },
+              {
+                id: 'column1field3',
+                component: 'input',
+              },
+            ],
+          },
+          {
+            fields: [
+              {
+                id: 'column2field1',
+                component: 'textarea',
+              },
+            ],
+          },
+          {
+            fields: [
+              {
+                id: 'column3field1',
+                component: 'select',
+                title: 'Column 3 Field 1',
+                options: [
+                  {
+                    label: 'option 1',
+                    value: 'value 1',
+                  },
+                ],
+              },
+              {
+                id: 'column3field2',
+                component: 'select',
+                placeholder: 'Column 3 Field 2',
+              },
+              {
+                id: 'column3field3',
+                component: 'select',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    style: {},
+  },
+};
+
 function CatchForm({ contract }: { contract: Contract<Value> }): JSX.Element {
   const onSubmit = (data: Value) => console.log(data);
   try {
-    const form = useForm({ contract });
+    const form = useForm({
+      contract,
+      values: {
+        row1field1: '',
+        row1field2: '',
+        row1field3: '',
+        row2field1: '',
+        row3field1: '',
+        row3field2: '',
+        row3field3: '',
+        column1field1: '',
+        column1field2: '',
+        column1field3: '',
+        column2field1: '',
+        column3field1: '',
+        column3field2: '',
+        column3field3: '',
+      },
+    });
 
     return (
       <>
-        <Form form={form} />
+        <Form form={form} onChange={(event) => console.log(event)} />
         <button
           onClick={() => {
             void form.handleSubmit(onSubmit)();
@@ -45,134 +193,6 @@ function CatchForm({ contract }: { contract: Contract<Value> }): JSX.Element {
 }
 
 function FormStory(): JSX.Element {
-  const initialContract: Contract<Value> = {
-    style: {},
-    tab: {
-      tabs: [
-        {
-          title: 'Tab 1',
-          style: {},
-          rows: [
-            {
-              style: {},
-              fields: [
-                {
-                  id: 'row1field1',
-                  component: 'input',
-                  title: 'Row 1 Field 1',
-                  style: {
-                    color: 'green',
-                  },
-                },
-                {
-                  id: 'row1field2',
-                  component: 'input',
-                  placeholder: 'Row 1 Field 2',
-                },
-                {
-                  id: 'row1field3',
-                  component: 'input',
-                },
-              ],
-            },
-            {
-              fields: [
-                {
-                  id: 'row2field1',
-                  component: 'textarea',
-                },
-              ],
-            },
-            {
-              fields: [
-                {
-                  id: 'row3field1',
-                  component: 'select',
-                  title: 'Row 3 Field 1',
-                  options: [
-                    {
-                      label: 'option 1',
-                      value: 'value 1',
-                    },
-                  ],
-                  style: {
-                    color: 'green',
-                  },
-                },
-                {
-                  id: 'row3field2',
-                  component: 'select',
-                  placeholder: 'Row 3 Field 2',
-                },
-                {
-                  id: 'row3field3',
-                  component: 'select',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          title: 'Tab 2',
-          style: {},
-          columns: [
-            {
-              style: {},
-              fields: [
-                {
-                  id: 'column1field1',
-                  component: 'input',
-                  title: 'Column 1 Field 1',
-                },
-                {
-                  id: 'column1field2',
-                  component: 'input',
-                  placeholder: 'Column 1 Field 2',
-                },
-                {
-                  id: 'column1field3',
-                  component: 'input',
-                },
-              ],
-            },
-            {
-              fields: [
-                {
-                  id: 'column2field1',
-                  component: 'textarea',
-                },
-              ],
-            },
-            {
-              fields: [
-                {
-                  id: 'column3field1',
-                  component: 'select',
-                  title: 'Column 3 Field 1',
-                  options: [
-                    {
-                      label: 'option 1',
-                      value: 'value 1',
-                    },
-                  ],
-                },
-                {
-                  id: 'column3field2',
-                  component: 'select',
-                  placeholder: 'Column 3 Field 2',
-                },
-                {
-                  id: 'column3field3',
-                  component: 'select',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      style: {},
-    },
-  };
   const [value, setValue] = useState<string>(JSON.stringify(initialContract, null, 2));
   const [error, setError] = useState<string>();
   const [contract, setContract] = useState<Contract<Value>>(initialContract);

@@ -1,7 +1,7 @@
 import { Input, Label, Select, TextArea } from '@tarsilla/react-form-components';
 import { FieldValues, useForm as useHookForm } from 'react-hook-form';
 
-import { FormProps, UseFormProps } from '@types';
+import { UseFormFormReturn, UseFormProps } from '@types';
 
 import { validateContract } from './validator/index.js';
 
@@ -9,7 +9,7 @@ function useForm<FormValue extends FieldValues>({
   contract,
   values,
   customComponents = [],
-}: UseFormProps<FormValue>): FormProps<FormValue> {
+}: UseFormProps<FormValue>): UseFormFormReturn<FormValue> {
   const components = [Input, Label, Select, TextArea, ...customComponents];
 
   validateContract({

@@ -3,7 +3,24 @@ import { HTMLAttributes } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormComponent, FormComponentProps } from '@tarsilla/react-form-components';
 
-import { Form, useForm } from '../src/index.js';
+import { Contract, Form, useForm } from '../src/index.js';
+
+type Value = {
+  row1field1: string;
+  row1field2: string;
+  row1field3: string;
+  row2field1: string;
+  row3field1: string;
+  row3field2: string;
+  row3field3: string;
+  column1field1: string;
+  column1field2: string;
+  column1field3: string;
+  column2field1: string;
+  column3field1: string;
+  column3field2: string;
+  column3field3: string;
+};
 
 const CustomInput: FormComponent<string, HTMLAttributes<HTMLInputElement>> = {
   id: 'custom-input',
@@ -18,17 +35,15 @@ const TextFieldOverride = {
 };
 
 function FormStory(): JSX.Element {
-  const contract = {
+  const contract: Contract<Value> = {
     style: {},
     tab: {
       tabs: [
         {
-          id: 'tab1',
           title: 'Tab 1',
           style: {},
           rows: [
             {
-              id: 'row1',
               style: {},
               fields: [
                 {
@@ -51,7 +66,6 @@ function FormStory(): JSX.Element {
               ],
             },
             {
-              id: 'row2',
               fields: [
                 {
                   id: 'row2field1',
@@ -60,7 +74,6 @@ function FormStory(): JSX.Element {
               ],
             },
             {
-              id: 'row3',
               fields: [
                 {
                   id: 'row3field1',
@@ -90,12 +103,10 @@ function FormStory(): JSX.Element {
           ],
         },
         {
-          id: 'tab2',
           title: 'Tab 2',
           style: {},
           columns: [
             {
-              id: 'column1',
               style: {},
               fields: [
                 {
@@ -115,7 +126,6 @@ function FormStory(): JSX.Element {
               ],
             },
             {
-              id: 'column2',
               fields: [
                 {
                   id: 'column2field1',
@@ -124,7 +134,6 @@ function FormStory(): JSX.Element {
               ],
             },
             {
-              id: 'column3',
               fields: [
                 {
                   id: 'column3field1',
@@ -156,9 +165,28 @@ function FormStory(): JSX.Element {
   };
   const customComponents = [CustomInput, TextFieldOverride];
 
-  const form = useForm({ contract, customComponents });
+  const form = useForm({
+    contract,
+    values: {
+      row1field1: '',
+      row1field2: '',
+      row1field3: '',
+      row2field1: '',
+      row3field1: '',
+      row3field2: '',
+      row3field3: '',
+      column1field1: '',
+      column1field2: '',
+      column1field3: '',
+      column2field1: '',
+      column3field1: '',
+      column3field2: '',
+      column3field3: '',
+    },
+    customComponents,
+  });
 
-  return <Form form={form} />;
+  return <Form form={form} onChange={(event) => console.log(event)} />;
 }
 
 const meta: Meta<typeof FormStory> = {

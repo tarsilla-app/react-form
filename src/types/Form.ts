@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { FormComponent } from '@tarsilla/react-form-components';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
+import { FieldValues, UseFormReturn as ReactUseFormReturn } from 'react-hook-form';
 
 import { Contract } from './Contract.js';
 import { UnknownObject } from './UnknownObject.js';
@@ -12,9 +12,9 @@ type UseFormProps<FormValue extends FieldValues> = {
   customComponents?: FormComponent<any, UnknownObject>[];
 };
 
-type FormProps<FormValue extends FieldValues> = UseFormReturn<FormValue, unknown, undefined> & {
+type UseFormFormReturn<FormValue extends FieldValues> = ReactUseFormReturn<FormValue, unknown, undefined> & {
   contract: Contract<FormValue>;
   components: FormComponent<any, UnknownObject>[];
 };
 
-export { type UseFormProps, type FormProps };
+export { type UseFormProps, type UseFormFormReturn };

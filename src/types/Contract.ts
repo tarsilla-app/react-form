@@ -9,6 +9,7 @@ type Contract<FormValue extends FieldValues> = {
   tab?: ContractTab<FormValue>;
   rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
+  debounceWait?: number;
   style?: CSSProperties | TabProps['style'];
 };
 
