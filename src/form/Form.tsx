@@ -27,15 +27,17 @@ function Form<FormValue extends FieldValues>({ form }: { form: FormProps<FormVal
   return (
     <FormProvider {...methods}>
       <Container flexFlow={contract.rows ? 'column' : 'row'} style={contract.style}>
-        {contract.rows?.map((row) => <Row contract={row} components={components} style={row.style} key={row.id} />)}
-        {contract.columns?.map((column) => (
-          <Column contract={column} components={components} style={column.style} key={column.id} />
+        {contract.rows?.map((row, index) => (
+          <Row contract={row} components={components} style={row.style} key={index} />
+        ))}
+        {contract.columns?.map((column, index) => (
+          <Column contract={column} components={components} style={column.style} key={index} />
         ))}
         {contract.tab && (
           <TabWrapper
-            tabs={contract.tab.tabs.map((tab) => ({
+            tabs={contract.tab.tabs.map((tab, index) => ({
               header: () => <>{tab.title}</>,
-              content: () => <Tab contract={tab} components={components} style={tab.style} key={tab.id} />,
+              content: () => <Tab contract={tab} components={components} style={tab.style} key={index} />,
             }))}
             style={contract.tab.style}
           />

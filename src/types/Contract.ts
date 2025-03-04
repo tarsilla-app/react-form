@@ -18,7 +18,6 @@ type ContractTab<FormValue extends FieldValues> = {
 };
 
 type ContractTabs<FormValue extends FieldValues> = {
-  id: string;
   title: string;
   fields?: ContractField<FormValue>[];
   rows?: ContractRow<FormValue>[];
@@ -27,7 +26,6 @@ type ContractTabs<FormValue extends FieldValues> = {
 };
 
 type ContractRow<FormValue extends FieldValues> = {
-  id: string;
   fields?: ContractField<FormValue>[];
   rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
@@ -35,7 +33,6 @@ type ContractRow<FormValue extends FieldValues> = {
 };
 
 type ContractColumn<FormValue extends FieldValues> = {
-  id: string;
   fields?: ContractField<FormValue>[];
   rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
@@ -44,8 +41,9 @@ type ContractColumn<FormValue extends FieldValues> = {
 
 type ContractField<FormValue extends FieldValues> = {
   id: Path<FormValue>;
-  component: string;
   title?: string;
+  component: string;
+  style?: CSSProperties;
 } & UnknownObject;
 
 export {

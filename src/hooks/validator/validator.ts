@@ -33,9 +33,6 @@ function validateRows<FormValue extends FieldValues>({
 }): string[] {
   return (
     rows?.reduce<string[]>((ids, row) => {
-      if (!row.id) {
-        throw new Error('Row id is required');
-      }
       const rv = [row.fields, row.rows, row.columns].filter(Boolean);
       if (rv.length > 1) {
         throw new Error('Rows can only have fields or rows or columns');
@@ -53,7 +50,7 @@ function validateRows<FormValue extends FieldValues>({
         allowedComponents,
       });
 
-      return [...ids, row.id, ...fieldsIds, ...rowsIds, ...columnsIds];
+      return [...ids, ...fieldsIds, ...rowsIds, ...columnsIds];
     }, []) ?? []
   );
 }
@@ -67,9 +64,6 @@ function validateColumns<FormValue extends FieldValues>({
 }): string[] {
   return (
     columns?.reduce<string[]>((ids, column) => {
-      if (!column.id) {
-        throw new Error('Column id is required');
-      }
       const rv = [column.fields, column.rows, column.columns].filter(Boolean);
       if (rv.length > 1) {
         throw new Error('Columns can only have fields or rows or columns');
@@ -87,7 +81,7 @@ function validateColumns<FormValue extends FieldValues>({
         allowedComponents,
       });
 
-      return [...ids, column.id, ...fieldsIds, ...rowsIds, ...columnsIds];
+      return [...ids, ...fieldsIds, ...rowsIds, ...columnsIds];
     }, []) ?? []
   );
 }
@@ -101,9 +95,6 @@ function validateTabs<FormValue extends FieldValues>({
 }): string[] {
   return (
     tabs?.reduce<string[]>((ids, tab) => {
-      if (!tab.id) {
-        throw new Error('Tab id is required');
-      }
       const rv = [tab.fields, tab.rows, tab.columns].filter(Boolean);
       if (rv.length > 1) {
         throw new Error('Tabs can only have fields or rows or columns');
@@ -121,7 +112,7 @@ function validateTabs<FormValue extends FieldValues>({
         allowedComponents,
       });
 
-      return [...ids, tab.id, ...fieldsIds, ...rowsIds, ...columnsIds];
+      return [...ids, ...fieldsIds, ...rowsIds, ...columnsIds];
     }, []) ?? []
   );
 }

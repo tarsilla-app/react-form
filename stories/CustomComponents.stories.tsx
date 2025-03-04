@@ -11,7 +11,7 @@ const CustomInput: FormComponent<string, HTMLAttributes<HTMLInputElement>> = {
 };
 
 const TextFieldOverride = {
-  id: 'text',
+  id: 'input',
   render: ({ onChange, ...rest }: FormComponentProps<string, HTMLAttributes<HTMLInputElement>>): JSX.Element => {
     return <input onChange={(e) => onChange(e.target.value)} {...rest} />;
   },
@@ -41,12 +41,12 @@ function FormStory(): JSX.Element {
                 },
                 {
                   id: 'row1field2',
-                  component: 'text',
+                  component: 'input',
                   placeholder: 'Row 1 Field 2',
                 },
                 {
                   id: 'row1field3',
-                  component: 'text',
+                  component: 'input',
                 },
               ],
             },
@@ -100,17 +100,17 @@ function FormStory(): JSX.Element {
               fields: [
                 {
                   id: 'column1field1',
-                  component: 'text',
+                  component: 'input',
                   title: 'Column 1 Field 1',
                 },
                 {
                   id: 'column1field2',
-                  component: 'text',
+                  component: 'input',
                   placeholder: 'Column 1 Field 2',
                 },
                 {
                   id: 'column1field3',
-                  component: 'text',
+                  component: 'input',
                 },
               ],
             },

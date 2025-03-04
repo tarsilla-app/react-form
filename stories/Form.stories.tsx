@@ -3,10 +3,27 @@ import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Form, useForm } from '../src/index.js';
-import { Contract, UnknownObject } from '../src/types/index.js';
+import { Contract } from '../src/types/index.js';
 
-function CatchForm({ contract }: { contract: Contract<UnknownObject> }): JSX.Element {
-  const onSubmit = (data: UnknownObject) => console.log(data);
+type Value = {
+  row1field1: string;
+  row1field2: string;
+  row1field3: string;
+  row2field1: string;
+  row3field1: string;
+  row3field2: string;
+  row3field3: string;
+  column1field1: string;
+  column1field2: string;
+  column1field3: string;
+  column2field1: string;
+  column3field1: string;
+  column3field2: string;
+  column3field3: string;
+};
+
+function CatchForm({ contract }: { contract: Contract<Value> }): JSX.Element {
+  const onSubmit = (data: Value) => console.log(data);
   try {
     const form = useForm({ contract });
 
@@ -28,22 +45,20 @@ function CatchForm({ contract }: { contract: Contract<UnknownObject> }): JSX.Ele
 }
 
 function FormStory(): JSX.Element {
-  const initialContract = {
+  const initialContract: Contract<Value> = {
     style: {},
     tab: {
       tabs: [
         {
-          id: 'tab1',
           title: 'Tab 1',
           style: {},
           rows: [
             {
-              id: 'row1',
               style: {},
               fields: [
                 {
                   id: 'row1field1',
-                  component: 'text',
+                  component: 'input',
                   title: 'Row 1 Field 1',
                   style: {
                     color: 'green',
@@ -51,17 +66,16 @@ function FormStory(): JSX.Element {
                 },
                 {
                   id: 'row1field2',
-                  component: 'text',
+                  component: 'input',
                   placeholder: 'Row 1 Field 2',
                 },
                 {
                   id: 'row1field3',
-                  component: 'text',
+                  component: 'input',
                 },
               ],
             },
             {
-              id: 'row2',
               fields: [
                 {
                   id: 'row2field1',
@@ -70,7 +84,6 @@ function FormStory(): JSX.Element {
               ],
             },
             {
-              id: 'row3',
               fields: [
                 {
                   id: 'row3field1',
@@ -100,32 +113,29 @@ function FormStory(): JSX.Element {
           ],
         },
         {
-          id: 'tab2',
           title: 'Tab 2',
           style: {},
           columns: [
             {
-              id: 'column1',
               style: {},
               fields: [
                 {
                   id: 'column1field1',
-                  component: 'text',
+                  component: 'input',
                   title: 'Column 1 Field 1',
                 },
                 {
                   id: 'column1field2',
-                  component: 'text',
+                  component: 'input',
                   placeholder: 'Column 1 Field 2',
                 },
                 {
                   id: 'column1field3',
-                  component: 'text',
+                  component: 'input',
                 },
               ],
             },
             {
-              id: 'column2',
               fields: [
                 {
                   id: 'column2field1',
@@ -134,7 +144,6 @@ function FormStory(): JSX.Element {
               ],
             },
             {
-              id: 'column3',
               fields: [
                 {
                   id: 'column3field1',
@@ -166,11 +175,11 @@ function FormStory(): JSX.Element {
   };
   const [value, setValue] = useState<string>(JSON.stringify(initialContract, null, 2));
   const [error, setError] = useState<string>();
-  const [contract, setContract] = useState<Contract<UnknownObject>>(initialContract);
+  const [contract, setContract] = useState<Contract<Value>>(initialContract);
 
   useEffect(() => {
     try {
-      const parsed = JSON.parse(value) as Contract<UnknownObject>;
+      const parsed = JSON.parse(value) as Contract<Value>;
       setContract(parsed);
       setError(undefined);
     } catch (e: unknown) {
