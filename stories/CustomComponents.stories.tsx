@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, JSX } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormComponent, FormComponentProps } from '@tarsilla/react-form-components';
@@ -36,21 +36,21 @@ const TextFieldOverride = {
 
 function FormStory(): JSX.Element {
   const contract: Contract<Value> = {
-    style: {},
+    theme: {},
     tab: {
       tabs: [
         {
           title: 'Tab 1',
-          style: {},
+          theme: {},
           rows: [
             {
-              style: {},
+              theme: {},
               fields: [
                 {
                   id: 'row1field1',
                   component: 'custom-input',
                   title: 'Row 1 Field 1',
-                  style: {
+                  theme: {
                     color: 'green',
                   },
                 },
@@ -85,7 +85,7 @@ function FormStory(): JSX.Element {
                       value: 'value 1',
                     },
                   ],
-                  style: {
+                  theme: {
                     color: 'green',
                   },
                 },
@@ -104,10 +104,10 @@ function FormStory(): JSX.Element {
         },
         {
           title: 'Tab 2',
-          style: {},
+          theme: {},
           columns: [
             {
-              style: {},
+              theme: {},
               fields: [
                 {
                   id: 'column1field1',
@@ -160,7 +160,7 @@ function FormStory(): JSX.Element {
           ],
         },
       ],
-      style: {},
+      theme: {},
     },
   };
   const customComponents = [CustomInput, TextFieldOverride];

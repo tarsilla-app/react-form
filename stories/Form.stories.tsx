@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { JSX, useEffect, useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -24,21 +24,21 @@ type Value = {
 
 const initialContract: Contract<Value> = {
   debounceWait: 2000,
-  style: {},
+  theme: {},
   tab: {
     tabs: [
       {
         title: 'Tab 1',
-        style: {},
+        theme: {},
         rows: [
           {
-            style: {},
+            theme: {},
             fields: [
               {
                 id: 'row1field1',
                 component: 'input',
                 title: 'Row 1 Field 1',
-                style: {
+                theme: {
                   color: 'green',
                 },
               },
@@ -73,7 +73,7 @@ const initialContract: Contract<Value> = {
                     value: 'value 1',
                   },
                 ],
-                style: {
+                theme: {
                   color: 'green',
                 },
               },
@@ -92,10 +92,10 @@ const initialContract: Contract<Value> = {
       },
       {
         title: 'Tab 2',
-        style: {},
+        theme: {},
         columns: [
           {
-            style: {},
+            theme: {},
             fields: [
               {
                 id: 'column1field1',
@@ -148,7 +148,7 @@ const initialContract: Contract<Value> = {
         ],
       },
     ],
-    style: {},
+    theme: {},
   },
 };
 

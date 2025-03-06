@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { JSX, useEffect, useRef } from 'react';
 
 import styled from '@emotion/styled';
 import { Tab as TabWrapper } from '@tarsilla/react-components/tab';
@@ -30,9 +30,10 @@ type FormProps<FormValue extends FieldValues> = {
   onChange?: (event: { values: DeepPartial<FormValue> }) => void;
 };
 
+//TODO validation
 function Form<FormValue extends FieldValues>({ form, onChange }: FormProps<FormValue>): JSX.Element {
   const { contract, components, ...methods } = form;
-  const { debounceWait, rows, columns, tab, style } = contract;
+  const { debounceWait, rows, columns, tab, theme } = contract;
   const { watch } = methods;
   const onChangeRef = useRef<((event: { values: DeepPartial<FormValue> }) => void) | null>(null);
   const debounceRef = useRef<(e: { values: DeepPartial<FormValue> }) => void>(
@@ -61,18 +62,16 @@ function Form<FormValue extends FieldValues>({ form, onChange }: FormProps<FormV
 
   return (
     <FormProvider {...methods}>
-      <Container flexFlow={rows ? 'column' : 'row'} style={style}>
-        {rows?.map((row, index) => <Row contract={row} components={components} style={row.style} key={index} />)}
-        {columns?.map((column, index) => (
-          <Column contract={column} components={components} style={column.style} key={index} />
-        ))}
+      <Container flexFlow={rows ? 'column' : 'row'} style={theme}>
+        {rows?.map((row, index) => <Row contract={row} components={components} key={index} />)}
+        {columns?.map((column, index) => <Column contract={column} components={components} key={index} />)}
         {tab && (
           <TabWrapper
             tabs={tab.tabs.map((tab, index) => ({
               header: () => <>{tab.title}</>,
-              content: () => <Tab contract={tab} components={components} style={tab.style} key={index} />,
+              content: () => <Tab contract={tab} components={components} key={index} />,
             }))}
-            style={tab.style}
+            theme={tab.theme}
           />
         )}
       </Container>

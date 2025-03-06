@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { JSX } from 'react';
 
 import styled from '@emotion/styled';
 import { FormComponent } from '@tarsilla/react-form-components';
@@ -21,17 +21,14 @@ type Props<FormValue extends FieldValues> = {
   contract: ContractColumn<FormValue>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   components: FormComponent<any, any>[];
-  style?: CSSProperties;
 };
 
-function Column<FormValue extends FieldValues>({ contract, components, style }: Props<FormValue>): JSX.Element {
+function Column<FormValue extends FieldValues>({ contract, components }: Props<FormValue>): JSX.Element {
   return (
-    <Container style={style}>
+    <Container style={contract.theme}>
       {contract.fields?.map((field, index) => <Field contract={field} components={components} key={index} />)}
-      {contract.rows?.map((row, index) => <Row contract={row} components={components} style={row.style} key={index} />)}
-      {contract.columns?.map((column, index) => (
-        <Column contract={column} components={components} style={column.style} key={index} />
-      ))}
+      {contract.rows?.map((row, index) => <Row contract={row} components={components} key={index} />)}
+      {contract.columns?.map((column, index) => <Column contract={column} components={components} key={index} />)}
     </Container>
   );
 }

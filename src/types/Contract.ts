@@ -10,12 +10,12 @@ type Contract<FormValue extends FieldValues> = {
   rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
   debounceWait?: number;
-  style?: CSSProperties | TabProps['style'];
+  theme?: CSSProperties;
 };
 
 type ContractTab<FormValue extends FieldValues> = {
   tabs: ContractTabs<FormValue>[];
-  style?: TabProps['style'];
+  theme?: TabProps['theme'];
 };
 
 type ContractTabs<FormValue extends FieldValues> = {
@@ -23,28 +23,28 @@ type ContractTabs<FormValue extends FieldValues> = {
   fields?: ContractField<FormValue>[];
   rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
-  style?: CSSProperties;
+  theme?: CSSProperties;
 };
 
 type ContractRow<FormValue extends FieldValues> = {
   fields?: ContractField<FormValue>[];
   rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
-  style?: CSSProperties;
+  theme?: CSSProperties;
 };
 
 type ContractColumn<FormValue extends FieldValues> = {
   fields?: ContractField<FormValue>[];
   rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
-  style?: CSSProperties;
+  theme?: CSSProperties;
 };
 
 type ContractField<FormValue extends FieldValues> = {
   id: Path<FormValue>;
   title?: string;
   component: string;
-  style?: CSSProperties;
+  theme?: CSSProperties;
 } & UnknownObject;
 
 export {
