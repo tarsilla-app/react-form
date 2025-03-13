@@ -1,6 +1,7 @@
 import { HTMLAttributes, JSX } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { FormComponent, FormComponentProps } from '@tarsilla/react-form-components';
 
 import { Contract, Form, useForm } from '../src/index.js';
@@ -27,9 +28,9 @@ const CustomInput: FormComponent<string, HTMLAttributes<HTMLInputElement>> = {
   render: ({ onChange, ...rest }) => <input onChange={(e) => onChange(e.target.value)} {...rest} />,
 };
 
-const TextFieldOverride = {
+const InoutOverride = {
   id: 'input',
-  render: ({ onChange, ...rest }: FormComponentProps<string, HTMLAttributes<HTMLInputElement>>): JSX.Element => {
+  render: ({ onChange, ...rest }: FormComponentProps<string, HTMLAttributes<HTMLInputElement>>) => {
     return <input onChange={(e) => onChange(e.target.value)} {...rest} />;
   },
 };
@@ -163,7 +164,7 @@ function FormStory(): JSX.Element {
       theme: {},
     },
   };
-  const customComponents = [CustomInput, TextFieldOverride];
+  const customComponents = [CustomInput, InoutOverride];
 
   const form = useForm({
     contract,

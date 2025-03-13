@@ -1,9 +1,10 @@
 import { JSX, useEffect, useRef } from 'react';
 
 import styled from '@emotion/styled';
-import { Tab as TabWrapper } from '@tarsilla/react-components/tab';
 import debounce from 'debounce';
 import { DeepPartial, FieldValues, FormProvider } from 'react-hook-form';
+
+import { Tab as TabWrapper } from '@tarsilla/react-components/tab';
 
 import { UseFormFormReturn } from '@types';
 
@@ -44,7 +45,7 @@ function Form<FormValue extends FieldValues>({ form, onChange }: FormProps<FormV
 
   useEffect(() => {
     function getDebouncedOnChange(onChange?: (event: { values: DeepPartial<FormValue> }) => void) {
-      onChangeRef.current = onChange || null;
+      onChangeRef.current = onChange ?? null;
       if (debounceWait && onChange) {
         return debounceRef.current;
       }

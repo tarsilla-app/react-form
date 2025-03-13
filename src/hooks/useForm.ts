@@ -1,5 +1,6 @@
-import { Input, Label, Select, TextArea } from '@tarsilla/react-form-components';
 import { FieldValues, useForm as useHookForm } from 'react-hook-form';
+
+import { Input, Label, Select, TextArea } from '@tarsilla/react-form-components';
 
 import { UseFormFormReturn, UseFormProps } from '@types';
 

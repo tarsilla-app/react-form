@@ -1,9 +1,8 @@
 import { CSSProperties } from 'react';
 
-import { TabProps } from '@tarsilla/react-components/tab';
 import { FieldValues, Path } from 'react-hook-form';
 
-import { UnknownObject } from './UnknownObject.js';
+import { TabProps } from '@tarsilla/react-components/tab';
 
 type Contract<FormValue extends FieldValues> = {
   tab?: ContractTab<FormValue>;
@@ -45,7 +44,7 @@ type ContractField<FormValue extends FieldValues> = {
   title?: string;
   component: string;
   theme?: CSSProperties;
-} & UnknownObject;
+} & Record<string, unknown>;
 
 export {
   type Contract,

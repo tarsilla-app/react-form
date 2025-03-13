@@ -1,8 +1,9 @@
 import { JSX } from 'react';
 
 import styled from '@emotion/styled';
-import { FormComponent } from '@tarsilla/react-form-components';
 import { FieldValues } from 'react-hook-form';
+
+import { FormComponent } from '@tarsilla/react-form-components';
 
 import { ContractTabs } from '@types';
 
@@ -25,8 +26,8 @@ const Container = styled.div<ContainerProps>`
 
 type Props<FormValue extends FieldValues> = {
   contract: ContractTabs<FormValue>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  components: FormComponent<any, any>[];
+
+  components: FormComponent<unknown, object>[];
 };
 
 function Tab<FormValue extends FieldValues>({ contract, components }: Props<FormValue>): JSX.Element {
