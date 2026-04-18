@@ -1,15 +1,14 @@
-import { JSX } from 'react';
-
 import styled from '@emotion/styled';
+import { JSX } from 'react';
 import { FieldValues } from 'react-hook-form';
 
 import { FormComponent } from '@tarsilla/react-form-components';
 
 import { ContractTabs } from '@types';
 
-import { Column } from '../column/index.js';
-import { Field } from '../field/index.js';
-import { Row } from '../row/index.js';
+import { Column } from '../column/Column.js';
+import { Field } from '../field/Field.js';
+import { Row } from '../row/Row.js';
 
 type ContainerProps = {
   flexFlow: string;
@@ -25,17 +24,23 @@ const Container = styled.div<ContainerProps>`
 `;
 
 type Props<FormValue extends FieldValues> = {
-  contract: ContractTabs<FormValue>;
-
   components: FormComponent<unknown, object>[];
+
+  contract: ContractTabs<FormValue>;
 };
 
-function Tab<FormValue extends FieldValues>({ contract, components }: Props<FormValue>): JSX.Element {
+function Tab<FormValue extends FieldValues>({ components, contract }: Props<FormValue>): JSX.Element {
   return (
     <Container flexFlow={contract.rows ? 'column' : 'row'} style={contract.theme}>
-      {contract.fields?.map((field, index) => <Field contract={field} components={components} key={index} />)}
-      {contract.rows?.map((row, index) => <Row contract={row} components={components} key={index} />)}
-      {contract.columns?.map((column, index) => <Column contract={column} components={components} key={index} />)}
+      {contract.fields?.map((field) => (
+        <Field components={components} contract={field} key={field.key} />
+      ))}
+      {contract.rows?.map((row) => (
+        <Row components={components} contract={row} key={row.key} />
+      ))}
+      {contract.columns?.map((column) => (
+        <Column components={components} contract={column} key={column.key} />
+      ))}
     </Container>
   );
 }

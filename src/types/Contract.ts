@@ -1,14 +1,37 @@
 import { CSSProperties } from 'react';
-
 import { FieldValues, Path } from 'react-hook-form';
 
 import { TabProps } from '@tarsilla/react-components/tab';
 
 type Contract<FormValue extends FieldValues> = {
-  tab?: ContractTab<FormValue>;
-  rows?: ContractRow<FormValue>[];
   columns?: ContractColumn<FormValue>[];
   debounceWait?: number;
+  rows?: ContractRow<FormValue>[];
+  tab?: ContractTab<FormValue>;
+  theme?: CSSProperties;
+};
+
+type ContractColumn<FormValue extends FieldValues> = {
+  columns?: ContractColumn<FormValue>[];
+  fields?: ContractField<FormValue>[];
+  key?: string;
+  rows?: ContractRow<FormValue>[];
+  theme?: CSSProperties;
+};
+
+type ContractField<FormValue extends FieldValues> = {
+  component: string;
+  id: Path<FormValue>;
+  key?: string;
+  theme?: CSSProperties;
+  title?: string;
+} & Record<string, unknown>;
+
+type ContractRow<FormValue extends FieldValues> = {
+  columns?: ContractColumn<FormValue>[];
+  fields?: ContractField<FormValue>[];
+  key?: string;
+  rows?: ContractRow<FormValue>[];
   theme?: CSSProperties;
 };
 
@@ -18,39 +41,19 @@ type ContractTab<FormValue extends FieldValues> = {
 };
 
 type ContractTabs<FormValue extends FieldValues> = {
+  columns?: ContractColumn<FormValue>[];
+  fields?: ContractField<FormValue>[];
+  key?: string;
+  rows?: ContractRow<FormValue>[];
+  theme?: CSSProperties;
   title: string;
-  fields?: ContractField<FormValue>[];
-  rows?: ContractRow<FormValue>[];
-  columns?: ContractColumn<FormValue>[];
-  theme?: CSSProperties;
 };
-
-type ContractRow<FormValue extends FieldValues> = {
-  fields?: ContractField<FormValue>[];
-  rows?: ContractRow<FormValue>[];
-  columns?: ContractColumn<FormValue>[];
-  theme?: CSSProperties;
-};
-
-type ContractColumn<FormValue extends FieldValues> = {
-  fields?: ContractField<FormValue>[];
-  rows?: ContractRow<FormValue>[];
-  columns?: ContractColumn<FormValue>[];
-  theme?: CSSProperties;
-};
-
-type ContractField<FormValue extends FieldValues> = {
-  id: Path<FormValue>;
-  title?: string;
-  component: string;
-  theme?: CSSProperties;
-} & Record<string, unknown>;
 
 export {
   type Contract,
-  type ContractRow,
   type ContractColumn,
-  type ContractTabs,
-  type ContractTab,
   type ContractField,
+  type ContractRow,
+  type ContractTab,
+  type ContractTabs,
 };

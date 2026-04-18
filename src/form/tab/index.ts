@@ -1,1 +1,1 @@
-export * from './Tab.jsx';
+export * from './Tab.js';

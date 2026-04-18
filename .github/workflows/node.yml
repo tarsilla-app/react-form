@@ -1,0 +1,37 @@
+name: CI/CD
+on:
+  push:
+    branches: [main]
+jobs:
+  ci-cd:
+    permissions:
+      security-events: write
+      contents: write
+      pages: write
+      id-token: write
+    uses: tarsilla-app/workflows/.github/workflows/node.yml@main
+    with:
+      code-analysis: |
+        {
+          "snyk": ["test", "code-test"],
+          "owasp": {
+            "suppression": true
+          },
+          "codeql": true
+        }
+      test: |
+        {
+          "test": "npm run test:coverage"
+        }
+      publish: |
+        {
+          "npm": true
+        }
+      deploy: |
+        {
+          "storybook": {
+            "host": "github-pages"
+          }
+        }
+    secrets: 
+      snyk-token: ${{ secrets.SNYK_TOKEN }}

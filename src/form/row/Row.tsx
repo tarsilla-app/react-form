@@ -1,14 +1,13 @@
-import { JSX } from 'react';
-
 import styled from '@emotion/styled';
+import { JSX } from 'react';
 import { FieldValues } from 'react-hook-form';
 
 import { FormComponent } from '@tarsilla/react-form-components';
 
 import { ContractRow } from '@types';
 
-import { Column } from '../column/index.js';
-import { Field } from '../field/index.js';
+import { Column } from '../column/Column.js';
+import { Field } from '../field/Field.js';
 
 const Container = styled.div`
   display: flex;
@@ -19,17 +18,23 @@ const Container = styled.div`
 `;
 
 type Props<FormValue extends FieldValues> = {
-  contract: ContractRow<FormValue>;
-
   components: FormComponent<unknown, object>[];
+
+  contract: ContractRow<FormValue>;
 };
 
-function Row<FormValue extends FieldValues>({ contract, components }: Props<FormValue>): JSX.Element {
+function Row<FormValue extends FieldValues>({ components, contract }: Props<FormValue>): JSX.Element {
   return (
     <Container style={contract.theme}>
-      {contract.fields?.map((field, index) => <Field contract={field} components={components} key={index} />)}
-      {contract.rows?.map((row, index) => <Row contract={row} components={components} key={index} />)}
-      {contract.columns?.map((column, index) => <Column contract={column} components={components} key={index} />)}
+      {contract.fields?.map((field) => (
+        <Field components={components} contract={field} key={field.key} />
+      ))}
+      {contract.rows?.map((row) => (
+        <Row components={components} contract={row} key={row.key} />
+      ))}
+      {contract.columns?.map((column) => (
+        <Column components={components} contract={column} key={column.key} />
+      ))}
     </Container>
   );
 }

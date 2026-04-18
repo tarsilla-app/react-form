@@ -1,16 +1,15 @@
-import { JSX, useEffect, useRef } from 'react';
-
-import styled from '@emotion/styled';
 import debounce from 'debounce';
+import styled from '@emotion/styled';
+import { JSX, useEffect } from 'react';
 import { DeepPartial, FieldValues, FormProvider } from 'react-hook-form';
 
 import { Tab as TabWrapper } from '@tarsilla/react-components/tab';
 
 import { UseFormFormReturn } from '@types';
 
-import { Column } from './column/index.js';
-import { Row } from './row/index.js';
-import { Tab } from './tab/index.js';
+import { Column } from './column/Column.js';
+import { Row } from './row/Row.js';
+import { Tab } from './tab/Tab.js';
 
 type ContainerProps = {
   flexFlow: string;
@@ -33,44 +32,46 @@ type FormProps<FormValue extends FieldValues> = {
 
 //TODO validation
 function Form<FormValue extends FieldValues>({ form, onChange }: FormProps<FormValue>): JSX.Element {
-  const { contract, components, ...methods } = form;
-  const { debounceWait, rows, columns, tab, theme } = contract;
+  const { components, contract, ...methods } = form;
+  const { columns, debounceWait, rows, tab, theme } = contract;
   const { watch } = methods;
-  const onChangeRef = useRef<((event: { values: DeepPartial<FormValue> }) => void) | null>(null);
-  const debounceRef = useRef<(e: { values: DeepPartial<FormValue> }) => void>(
-    debounce((event: { values: DeepPartial<FormValue> }) => {
-      onChangeRef.current?.(event);
-    }, debounceWait),
-  );
 
   useEffect(() => {
-    function getDebouncedOnChange(onChange?: (event: { values: DeepPartial<FormValue> }) => void) {
-      onChangeRef.current = onChange ?? null;
-      if (debounceWait && onChange) {
-        return debounceRef.current;
-      }
-      return (event: { values: DeepPartial<FormValue> }) => onChangeRef.current?.(event);
-    }
-    // Subscribe to all fields without forcing a re-render
+    if (!onChange) return;
+
+    const emit = (values: DeepPartial<FormValue>) => {
+      onChange({ values });
+    };
+
+    const debouncedEmit = debounceWait && debounceWait > 0 ? debounce(emit, debounceWait) : emit;
+
     const subscription = watch((values) => {
-      const debounceOnChange = getDebouncedOnChange(onChange);
-      // Use a debounce function or setTimeout here
-      debounceOnChange({ values });
+      debouncedEmit(values);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+      // lodash debounce cleanup
+      if (debounceWait && 'cancel' in debouncedEmit) {
+        (debouncedEmit as { cancel: () => void }).cancel();
+      }
+    };
   }, [watch, debounceWait, onChange]);
 
   return (
     <FormProvider {...methods}>
       <Container flexFlow={rows ? 'column' : 'row'} style={theme}>
-        {rows?.map((row, index) => <Row contract={row} components={components} key={index} />)}
-        {columns?.map((column, index) => <Column contract={column} components={components} key={index} />)}
+        {rows?.map((row) => (
+          <Row components={components} contract={row} key={row.key} />
+        ))}
+        {columns?.map((column) => (
+          <Column components={components} contract={column} key={column.key} />
+        ))}
         {tab && (
           <TabWrapper
-            tabs={tab.tabs.map((tab, index) => ({
+            tabs={tab.tabs.map((tab) => ({
+              content: () => <Tab components={components} contract={tab} key={tab.key} />,
               header: () => <>{tab.title}</>,
-              content: () => <Tab contract={tab} components={components} key={index} />,
             }))}
             theme={tab.theme}
           />

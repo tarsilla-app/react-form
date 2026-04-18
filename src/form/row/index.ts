@@ -1,1 +1,1 @@
-export * from './Row.jsx';
+export * from './Row.js';

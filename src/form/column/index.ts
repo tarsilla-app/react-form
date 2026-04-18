@@ -1,1 +1,1 @@
-export * from './Column.jsx';
+export * from './Column.js';

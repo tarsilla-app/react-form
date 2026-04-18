@@ -1,6 +1,5 @@
-import { JSX } from 'react';
-
 import styled from '@emotion/styled';
+import { JSX } from 'react';
 import { Controller, FieldValues, useFormContext } from 'react-hook-form';
 
 import { FormComponent } from '@tarsilla/react-form-components';
@@ -15,15 +14,15 @@ const Container = styled.div`
 `;
 
 type Props<FormValue extends FieldValues> = {
-  contract: ContractField<FormValue>;
-
   components: FormComponent<unknown, object>[];
+
+  contract: ContractField<FormValue>;
 };
 
-function Field<FormValue extends FieldValues>({ contract, components }: Props<FormValue>): JSX.Element {
+function Field<FormValue extends FieldValues>({ components, contract }: Props<FormValue>): JSX.Element {
   const { control } = useFormContext<FormValue>();
 
-  const { id, component, title, ...rest } = contract;
+  const { component, id, key, title, ...rest } = contract;
 
   const Component = components.find((c) => c.id === component);
   if (!Component) {
@@ -34,10 +33,10 @@ function Field<FormValue extends FieldValues>({ contract, components }: Props<Fo
     <Container>
       {title && <>{title}:</>}
       <Controller
-        name={id}
         control={control}
+        name={id}
         render={({ field: { onChange, value } }) => (
-          <Component.render id={id} value={value} onChange={onChange} {...rest} />
+          <Component.render id={id} key={key} onChange={onChange} value={value} {...rest} />
         )}
       />
     </Container>

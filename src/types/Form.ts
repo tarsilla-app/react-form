@@ -4,17 +4,17 @@ import { FormComponent } from '@tarsilla/react-form-components';
 
 import { Contract } from './Contract.js';
 
-type UseFormProps<FormValue extends FieldValues> = {
-  contract: Contract<FormValue>;
-  values?: FormValue;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  customComponents?: FormComponent<any, object>[];
-};
-
-type UseFormFormReturn<FormValue extends FieldValues> = ReactUseFormReturn<FormValue, unknown, undefined> & {
-  contract: Contract<FormValue>;
+type UseFormFormReturn<FormValue extends FieldValues> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   components: FormComponent<any, object>[];
+  contract: Contract<FormValue>;
+} & ReactUseFormReturn<FormValue, unknown, FormValue>;
+
+type UseFormProps<FormValue extends FieldValues> = {
+  contract: Contract<FormValue>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  customComponents?: FormComponent<any, object>[];
+  values?: FormValue;
 };
 
-export { type UseFormProps, type UseFormFormReturn };
+export { type UseFormFormReturn, type UseFormProps };

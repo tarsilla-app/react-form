@@ -4,24 +4,25 @@ import { Input, Label, Select, TextArea } from '@tarsilla/react-form-components'
 
 import { UseFormFormReturn, UseFormProps } from '@types';
 
-import { validateContract } from './validator/index.js';
+import { validateContract } from './validator/validator.js';
 
 function useForm<FormValue extends FieldValues>({
   contract,
-  values,
   customComponents = [],
+  values,
 }: UseFormProps<FormValue>): UseFormFormReturn<FormValue> {
+  //TODO remove overrides (id)
   const components = [Input, Label, Select, TextArea, ...customComponents];
 
   validateContract({
-    contract,
     allowedComponents: components.map((component) => component.id),
+    contract,
   });
 
-  const methods = useHookForm<FormValue>({ values });
+  const methods = useHookForm<FormValue, unknown, FormValue>({ values });
   return {
-    contract,
     components,
+    contract,
     ...methods,
   };
 }

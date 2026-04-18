@@ -129,6 +129,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+.dccache
+.DS_Store
 .vscode/
 lib/
 *storybook.log

@@ -1,11 +1,15 @@
 {
   "name": "@tarsilla/react-form",
   "version": "0.1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tarsilla-app/react-form"
+  },
   "publishConfig": {
     "access": "public"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=25"
   },
   "main": "./lib/index.mjs",
   "exports": {
@@ -34,15 +38,10 @@
     "pub": "npm publish --access public",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@tarsilla/react-components": "^0.1.3",
-    "@tarsilla/react-form-components": "^0.1.1",
-    "debounce": "^2.2.0",
-    "react-hook-form": "^7.54.2"
+    "prepare": "husky",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@types/react": "^19",
@@ -50,27 +49,39 @@
     "react": "^19",
     "react-dom": "^19"
   },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@tarsilla/react-components": "^1.0.2",
+    "@tarsilla/react-form-components": "^0.3.0",
+    "debounce": "^3.0.0",
+    "react-hook-form": "^7.72.1"
+  },
   "devDependencies": {
-    "@chromatic-com/storybook": "^3.2.5",
-    "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.8.0",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^12.0.1",
-    "@semantic-release/release-notes-generator": "^14.0.3",
-    "@storybook/addon-essentials": "^8.6.4",
-    "@storybook/addon-interactions": "^8.6.4",
-    "@storybook/blocks": "^8.6.4",
-    "@storybook/react": "^8.6.4",
-    "@storybook/react-vite": "^8.6.4",
-    "@storybook/test": "^8.6.4",
-    "@tarsilla/eslint-config": "^0.2.2",
-    "@tarsilla/rollup-config": "^0.0.10",
-    "cz-conventional-changelog": "^3.3.0",
+    "@chromatic-com/storybook": "^5.1.2",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/react": "^10.3.5",
+    "@storybook/react-vite": "^10.3.5",
+    "@tarsilla/commit-wizard": "^2.0.5",
+    "@tarsilla/eslint-config": "^1.4.0",
+    "@tarsilla/rollup-config": "^1.0.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitest/coverage-v8": "^4.1.4",
     "husky": "^9.1.7",
-    "semantic-release": "^24.2.3",
-    "storybook": "^8.6.4",
-    "typescript": "^5.8.2"
+    "jsdom": "^29.0.2",
+    "storybook": "^10.3.5",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.4"
+  },
+  "overrides": {
+    "commitizen": {
+      "inquirer": "^8.2.7",
+      "lodash": "^4.18.1"
+    },
+    "eslint-plugin-react-hooks": {
+      "eslint": "^9.0.0 || ^10.0.0"
+    }
   }
 }

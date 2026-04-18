@@ -1,18 +1,11 @@
-import { JSX, useEffect, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import { JSX, useMemo, useState } from 'react';
 
 import { Form, useForm } from '../src/index.js';
 import { Contract } from '../src/types/index.js';
 
 type Value = {
-  row1field1: string;
-  row1field2: string;
-  row1field3: string;
-  row2field1: string;
-  row3field1: string;
-  row3field2: string;
-  row3field3: string;
   column1field1: string;
   column1field2: string;
   column1field3: string;
@@ -20,53 +13,56 @@ type Value = {
   column3field1: string;
   column3field2: string;
   column3field3: string;
+  row1field1: string;
+  row1field2: string;
+  row1field3: string;
+  row2field1: string;
+  row3field1: string;
+  row3field2: string;
+  row3field3: string;
 };
 
 const initialContract: Contract<Value> = {
   debounceWait: 2000,
-  theme: {},
   tab: {
     tabs: [
       {
-        title: 'Tab 1',
-        theme: {},
         rows: [
           {
-            theme: {},
             fields: [
               {
-                id: 'row1field1',
                 component: 'input',
-                title: 'Row 1 Field 1',
+                id: 'row1field1',
                 theme: {
                   color: 'green',
                 },
+                title: 'Row 1 Field 1',
               },
               {
-                id: 'row1field2',
                 component: 'input',
+                id: 'row1field2',
                 placeholder: 'Row 1 Field 2',
               },
               {
-                id: 'row1field3',
                 component: 'input',
+                id: 'row1field3',
               },
             ],
+            theme: {},
           },
           {
             fields: [
               {
-                id: 'row2field1',
                 component: 'textarea',
+                id: 'row2field1',
               },
             ],
           },
           {
             fields: [
               {
-                id: 'row3field1',
                 component: 'select',
-                title: 'Row 3 Field 1',
+                id: 'row3field1',
                 options: [
                   {
                     label: 'option 1',
@@ -76,143 +72,150 @@ const initialContract: Contract<Value> = {
                 theme: {
                   color: 'green',
                 },
+                title: 'Row 3 Field 1',
               },
               {
-                id: 'row3field2',
                 component: 'select',
+                id: 'row3field2',
                 placeholder: 'Row 3 Field 2',
               },
               {
-                id: 'row3field3',
                 component: 'select',
+                id: 'row3field3',
               },
             ],
           },
         ],
+        theme: {},
+        title: 'Tab 1',
       },
       {
-        title: 'Tab 2',
-        theme: {},
         columns: [
           {
-            theme: {},
             fields: [
               {
-                id: 'column1field1',
                 component: 'input',
+                id: 'column1field1',
                 title: 'Column 1 Field 1',
               },
               {
-                id: 'column1field2',
                 component: 'input',
+                id: 'column1field2',
                 placeholder: 'Column 1 Field 2',
               },
               {
-                id: 'column1field3',
                 component: 'input',
+                id: 'column1field3',
               },
             ],
+            theme: {},
           },
           {
             fields: [
               {
-                id: 'column2field1',
                 component: 'textarea',
+                id: 'column2field1',
               },
             ],
           },
           {
             fields: [
               {
-                id: 'column3field1',
                 component: 'select',
-                title: 'Column 3 Field 1',
+                id: 'column3field1',
                 options: [
                   {
                     label: 'option 1',
                     value: 'value 1',
                   },
                 ],
+                title: 'Column 3 Field 1',
               },
               {
-                id: 'column3field2',
                 component: 'select',
+                id: 'column3field2',
                 placeholder: 'Column 3 Field 2',
               },
               {
-                id: 'column3field3',
                 component: 'select',
+                id: 'column3field3',
               },
             ],
           },
         ],
+        theme: {},
+        title: 'Tab 2',
       },
     ],
     theme: {},
   },
+  theme: {},
 };
 
 function CatchForm({ contract }: { contract: Contract<Value> }): JSX.Element {
-  const onSubmit = (data: Value) => console.log(data);
-  try {
-    const form = useForm({
-      contract,
-      values: {
-        row1field1: '',
-        row1field2: '',
-        row1field3: '',
-        row2field1: '',
-        row3field1: '',
-        row3field2: '',
-        row3field3: '',
-        column1field1: '',
-        column1field2: '',
-        column1field3: '',
-        column2field1: '',
-        column3field1: '',
-        column3field2: '',
-        column3field3: '',
-      },
-    });
+  const onSubmit = (data: Value) => {
+    console.log(data);
+  };
 
-    return (
-      <>
-        <Form form={form} onChange={(event) => console.log(event)} />
-        <button
-          onClick={() => {
-            void form.handleSubmit(onSubmit)();
-          }}
-        >
-          submit
-        </button>
-      </>
-    );
-  } catch (error: unknown) {
-    return <>{(error as Error).message}</>;
-  }
+  const form = useForm({
+    contract,
+    values: {
+      column1field1: '',
+      column1field2: '',
+      column1field3: '',
+      column2field1: '',
+      column3field1: '',
+      column3field2: '',
+      column3field3: '',
+      row1field1: '',
+      row1field2: '',
+      row1field3: '',
+      row2field1: '',
+      row3field1: '',
+      row3field2: '',
+      row3field3: '',
+    },
+  });
+
+  return (
+    <>
+      <Form
+        form={form}
+        onChange={(event) => {
+          console.log(event);
+        }}
+      />
+      <button
+        onClick={() => {
+          void form.handleSubmit(onSubmit)();
+        }}
+      >
+        submit
+      </button>
+    </>
+  );
 }
 
 function FormStory(): JSX.Element {
   const [value, setValue] = useState<string>(JSON.stringify(initialContract, null, 2));
-  const [error, setError] = useState<string>();
-  const [contract, setContract] = useState<Contract<Value>>(initialContract);
 
-  useEffect(() => {
+  const { contract, error } = useMemo(() => {
     try {
       const parsed = JSON.parse(value) as Contract<Value>;
-      setContract(parsed);
-      setError(undefined);
+      return { contract: parsed, error: undefined as string | undefined };
     } catch (e: unknown) {
-      setError((e as Error).message);
+      const message = e instanceof Error ? e.message : 'Invalid JSON';
+      return { contract: initialContract, error: message };
     }
   }, [value]);
+
   return (
     <div
       style={{
+        columnGap: '4px',
         display: 'flex',
         flexFlow: 'row',
         rowGap: '4px',
-        columnGap: '4px',
       }}
     >
       <div
@@ -223,18 +226,24 @@ function FormStory(): JSX.Element {
           width: '25vw',
         }}
       >
-        <textarea value={value} onChange={(event) => setValue(event.target.value)} rows={30} />
+        <textarea
+          onChange={(event) => {
+            setValue(event.target.value);
+          }}
+          rows={30}
+          value={value}
+        />
       </div>
       <div
         style={{
-          display: 'flex',
-          flexFlow: 'column',
-          rowGap: '4px',
-          borderWidth: '1px',
           borderColor: 'black',
           borderStyle: 'solid',
-          width: '60vw',
+          borderWidth: '1px',
+          display: 'flex',
+          flexFlow: 'column',
           padding: '8px',
+          rowGap: '4px',
+          width: '60vw',
         }}
       >
         {error ? <>{error}</> : <CatchForm contract={contract} />}
@@ -244,14 +253,14 @@ function FormStory(): JSX.Element {
 }
 
 const meta: Meta<typeof FormStory> = {
-  title: 'Form Builder',
+  args: {},
+  argTypes: {},
   component: FormStory,
   parameters: {
-    layout: 'centered',
     fullscreen: true,
+    layout: 'centered',
   },
-  argTypes: {},
-  args: {},
+  title: 'Form Builder',
 };
 
 export default meta;
